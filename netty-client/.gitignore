@@ -1,0 +1,10 @@
+/bin
+# Compiled class file
+*.class
+
+*.log
+#/.gradle/
+.project
+.classpath
+.settings
+
