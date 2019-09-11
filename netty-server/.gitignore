@@ -1,4 +1,6 @@
 target/
+pom.properties
+
 bin/
 # Compiled class file
 *.class
