@@ -1,4 +1,5 @@
-/bin
+target/
+bin/
 # Compiled class file
 *.class
 
@@ -8,4 +9,4 @@
 .classpath
 .settings
 
-/target/
+target/
