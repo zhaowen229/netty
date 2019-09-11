@@ -1,23 +1,42 @@
 package com.netty.client;
 
+import java.nio.Buffer;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.AsciiHeadersEncoder.NewlineType;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 
 public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 	
 	@Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		System.out.println("接受到server响应数据: ");
-        super.channelRead(ctx, msg);
-    }
-
-	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		super.channelActive(ctx);
 	}
+	
+	@Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		System.out.println("接受到server响应数据: "+msg.toString());
+        super.channelRead(ctx, msg);
+        
+        
+        byte[] content = msg.toString().getBytes();
+        
+        ByteBuf buf = ctx.channel().alloc().buffer(content.length);
+        
+        buf.writeBytes(content);
+        
+        ctx.writeAndFlush(buf).addListener(new ChannelFutureListener() {
+			
+			public void operationComplete(ChannelFuture future) throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+    }
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

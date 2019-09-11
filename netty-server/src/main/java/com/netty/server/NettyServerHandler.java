@@ -9,20 +9,20 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		System.out.println("Client is connected address==" + ctx.channel().remoteAddress());
+		System.out.println("Client is connected address" + ctx.channel().remoteAddress());
 		super.channelActive(ctx);
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		System.out.println("Client is disconnected address==" + ctx.channel().remoteAddress());
+		System.out.println("Client is disconnected address" + ctx.channel().remoteAddress());
 		super.channelInactive(ctx);
 	}
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		System.out.println("开始接收消息。。。");
-		ctx.fireChannelRead(msg);
+		ctx.writeAndFlush(msg);
 	}
 
 	@Override
